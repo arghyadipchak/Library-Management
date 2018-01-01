@@ -1,24 +1,13 @@
-﻿SHERLOCK INC. LICENSE TERMS
-LIBRARY MANAGEMENT
+//SHERLOCK INC. LICENSE TERMS
+//LIBRARY MANAGEMENT
 
-			     LICENSE
-=====================================================================
-These license terms are an agreement between Sherlock Inc. and you. Please read them. They apply to the software named above, which includes the media on which you received it, if any. Printed-paper license terms, which may come with the software, may replace or modify any on-screen license terms.
-By using the software, you accept these terms. If you do not accept them, do not use the software. Instead, return it to the retailer for a refund or credit. If you cannot obtain a refund there, contact Sherlock Inc.
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-Hmmmmm
-Completeeeeeeeeeeeee
-Hey Man I was just Joking............
-You can use this software wherever, however, anyhow as you like it.......
-Heyyyyyy Happy!!!!!!!!!!!!!
+				LICENSE
+=================================================
+Copyright (c) 2017-... Sherlock Inc. All rights reserved.
 
-But WARNING!!!!!!!
-If You try to Copy any part of this software(if you are able to), Please Consider That
-YOU ARE ELIGIBLE AND ABLE TO CREATE ONE LIKE THIS YOURSELF..............
-And About this I'm Very Very Serious.........................................................................
-Enjoy,
-Arghyadip Chakraborty
-CEO, Sherlock Inc.
-Ramakrishna Mission Vidyapith Deoghar
-Jharkhand, India
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+*Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+*Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+*Neither the name of Sherlock Inc. nor that of Arghyadip Chakraborty may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

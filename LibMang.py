@@ -596,7 +596,7 @@ def Search_Port():
     while ch in "123":
         print'''
     ------------------------------
-    |_____::REPORT PORTAL::______|
+    |_____::SEARCH PORTAL::______|
     | Enter 1.Search Book        |
     | Enter 2.Search Member      |
     | Enter 3.Search Issue       |
