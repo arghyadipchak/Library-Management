@@ -1,8 +1,10 @@
 from textwrap import wrap
 from pickle import load,dump
-from os import makedirs
+from os import makedirs,system
 from time import localtime
 from datetime import datetime
+from msvcrt import getch,putch
+from sys import argv
 class Book:
     def __init__(self,AN,Ti,Au,Pb,Pr,Ed,Pg,DP):
         self.AccNo=AN
@@ -60,9 +62,9 @@ class Issue:
         self.Fine=(day-14)*2 if day>14 else 0
 class Library:
     pth=""
-    def __init__(self,pt="D:/"):
-        self.pth=pt+'Library/'
-        for x in ('Books/','Members/','Issues/'):
+    def __init__(self,pt="D:\\"):
+        self.pth=pt+'Library Data\\'
+        for x in ('Books\\','Members\\','Issues\\'):
             try:
                 makedirs(self.pth+x)
             except:
@@ -71,7 +73,7 @@ class Library:
     	ext=No[0]
        	if ext not in "BMI" or ext=='':
             return None
-    	de=dict(zip(('B','M','I'),('Books/','Members/','Issues/')))
+    	de=dict(zip(('B','M','I'),('Books\\','Members\\','Issues\\')))
     	tf=None
     	try:
     	   tf=open(self.pth+de[ext]+"%s.dat"%No,Md)
@@ -87,6 +89,8 @@ class Library:
             else:
             	nno+=1
             	tf.close()
+    def Get_Date(self):
+        return "{2:0>2}/{1:0>2}/{0:0>2}".format(*localtime())
     def Book_Add(self):
         try:
             NAcc=self.NNo('B')
@@ -98,7 +102,7 @@ class Library:
             Pr=input("Enter Price: Rs ")
             Ed=input("Enter Edition: ")
             Pg=input("Enter No of Pages: ")
-            DP='/'.join(map(str,list(localtime())[2::-1]))
+            DP=self.Get_Date()
             if Ti and Au and Pb and Pr and Ed and Pg and DP:
                 bk=Book(Acc,Ti,Au,Pb,Pr,Ed,Pg,DP)
                 tf=self.AH(Acc,'wb+')
@@ -175,7 +179,7 @@ class Library:
             Ad=raw_input("Enter Address: ")
             DB=raw_input("Enter Date of Birth: ")
             Mob=raw_input("Enter Mobile No: ")
-            DJ='/'.join(map(str,list(localtime())[2::-1]))
+            DJ=self.Get_Date()
             if Nm and Ad and DB and Mob and DJ:
                 mem=Member(MNo,Nm,Ad,DB,Mob,DJ)
                 tf=self.AH(MNo,'wb+')
@@ -269,7 +273,7 @@ class Library:
             elif mem.MBIssued:
                 print "Member is Issued Some Book..."
                 return
-            DI='/'.join(map(str,list(localtime())[2::-1]))
+            DI=self.Get_Date()
             isu=Issue(IN,bk.AccNo,mem.MNo,DI)
             bk.Issued=True
             mem.MBIssued=True
@@ -295,7 +299,7 @@ class Library:
                 return
             isu=load(tf)
             tf.close()
-            DR='/'.join(map(str,list(localtime())[2::-1]))
+            DR=self.Get_Date()
             isu.Return(DR)
             if isu.Fine>0:
                 print "Fine: Rs %s"%isu.Fine
@@ -357,123 +361,121 @@ class Library:
             IN+=1
         return isul
 lib=None
-lnth=110
+wdt=110
+mwdt=30
+def Print_Head():
+    system("cls")
+    print '*'*wdt
+    print ('*'*5+" SHERLOCK'S LIBRARY "+'*'*5).center(wdt)
+    print '-'*wdt
+def Print_Menu(head,lst):
+    lst=lst+("Exit",)
+    print
+    print ' '*6+'-'*mwdt
+    print ' '*6+'|{0:_^{lnt}}|'.format('::'+head+'::',lnt=mwdt-2)
+    print ' '*6+'|{0: ^{lnt}}|'.format('',lnt=mwdt-2)
+    for no in range(len(lst)):
+        print ' '*6+'| {0: <{lnt}}|'.format('Enter %d.'%(no+1)+lst[no],lnt=mwdt-3)
+    print ' '*6+'-'*mwdt
+def Get_Input(rnge,prompt="Enter Choice: "):
+    for c in prompt:
+        putch(c)
+    srnge=map(str,rnge)
+    st=''
+    while True:
+        ch=getch()
+        if ch=='\r':
+            if len(st)!=0:
+                break
+        elif ch=='\b':
+            if len(st)!=0:
+                putch('\b')
+                putch(' ')
+                putch('\b')
+                st=st[:-1]
+        elif st+ch in srnge:
+            st+=ch
+            putch(ch)
+    print
+    return st
+def Wait():
+    print
+    for c in 'Press Any Key to Close....': putch(c)
+    getch()
 def LibMang():
-    print '*'*lnth
-    print ('*'*5+" WELCOME TO SHERLOCK'S LIBRARY "+'*'*5).center(lnth)
-    print '-'*lnth
+    head="MAIN MENU"
+    menu=("Book Maintenance","Member Maintenance","Book Issue/Return","Report Portal","Search Portal")
     df={1:Book_Maint,2:Mem_Maint,3:Book_IR,4:Report_Port,5:Search_Port}
     ch='1'
     while ch in "12345":
-        print'''
-      ------------------------------
-      |_______::MAIN MENU::________|
-      | Enter 1.Book Maintenance   |
-      | Enter 2.Member Maintenance |
-      | Enter 3.Book Issue/Return  |
-      | Enter 4.Report Portal      |
-      | Enter 5.Search Portal      |
-      | Enter 6.Exit               |
-      ------------------------------'''
-        ch=''
-        while ch not in "123456" or not ch:
-            ch=raw_input("Enter Choice: ")
+        Print_Head()
+        Print_Menu(head,menu)
+        ch=Get_Input(range(1,7))
         print
         if ch!='6':
             ch=df[int(ch)]()
-    print '-'*lnth
-    print ('*'*5+" THANK YOU "+'*'*5).center(lnth)
-    print '*'*lnth
+    print '-'*wdt
+    print ('*'*5+" THANK YOU "+'*'*5).center(wdt)
+    print '*'*wdt
+    getch()
 def Book_Maint():
-    print '~'*lnth
+    head="BOOK MAINTENANCE"
+    menu=("Add Book","Remove Book","Modify Book","Go Back")
     df={1:lib.Book_Add,2:lib.Book_Remove,3:lib.Book_Modify}
     ch='1'
     while ch in "123":
-        print'''
-      ------------------------------
-      |____::BOOK MAINTENANCE::____|
-      | Enter 1.Add Book           |
-      | Enter 2.Remove Book        |
-      | Enter 3.Modify Book        |
-      | Enter 4.Go Back            |
-      | Enter 5.Exit               |
-      ------------------------------'''
-        ch=''
-        while ch not in "12345" or not ch:
-            ch=raw_input("Enter Choice: ")
+        Print_Head()
+        Print_Menu(head,menu)
+        ch=Get_Input(range(1,6))
         print
         if ch in "123":
             df[int(ch)]()
-    print '~'*lnth
+            Wait()
     return '6' if ch=='5' else '1'
 def Mem_Maint():
-    print '~'*lnth
+    head="MEMBER MAINTENANCE"
+    menu=("Add Member","Remove Member","Modify Member","Go Back")
     df={1:lib.Mem_Add,2:lib.Mem_Remove,3:lib.Mem_Modify}
     ch='1'
     while ch in "123":
-        print'''
-      ------------------------------
-      |___::MEMBER MAINTENANCE::___|
-      | Enter 1.Add Member         |
-      | Enter 2.Remove Member      |
-      | Enter 3.Modify Member      |
-      | Enter 4.Go Back            |
-      | Enter 5.Exit               |
-      ------------------------------'''
-        ch=''
-        while ch not in "12345" or not ch:
-            ch=raw_input("Enter Choice: ")
+        Print_Head()
+        Print_Menu(head,menu)
+        ch=Get_Input(range(1,6))
         print
         if ch in "123":
             df[int(ch)]()
-    print '~'*lnth
+            Wait()
     return '6' if ch=='5' else '1'
 def Book_IR():
-    print '~'*lnth
+    head="BOOK ISSUE/RETURN"
+    menu=("Issue Book","Return Book","Search Portal","Go Back")
     df={1:lib.Book_Issue,2:lib.Book_Return,3:Search_Port}
     ch='1'
     while ch in "123":
-        print'''
-      ------------------------------
-      |____::BOOK ISSUE/RETURN::___|
-      | Enter 1.Issue Book         |
-      | Enter 2.Return Book        |
-      | Enter 3.Search Portal      |
-      | Enter 4.Go Back            |
-      | Enter 5.Exit               |
-      ------------------------------'''
-        ch=''
-        while ch not in "12345" or not ch:
-            ch=raw_input("Enter Choice: ")
+        Print_Head()
+        Print_Menu(head,menu)
+        ch=Get_Input(range(1,6))
         print
         if ch in "12":
             df[int(ch)]()
+            Wait()
         elif ch=='3':
             ch=df[int(ch)]()
             ch='5' if ch=='6' else ch
-    print '~'*lnth
     return '6' if ch=='5' else '1'
 def Report_Port():
-    print '~'*lnth
+    head="REPORT PORTAL"
+    menu=("Books Report","Members Report","Issues Report","Go Back")
     df={1:Books_Report,2:Members_Report,3:Issues_Report}
     ch='1'
     while ch in "123":
-        print'''
-      ------------------------------
-      |_____::REPORT PORTAL::______|
-      | Enter 1.Books Report       |
-      | Enter 2.Members Report     |
-      | Enter 3.Issues Report      |
-      | Enter 4.Go Back            |
-      | Enter 5.Exit               |
-      ------------------------------'''
-        ch=''
-        while ch not in "12345" or not ch:
-            ch=raw_input("Enter Choice: ")
+        Print_Head()
+        Print_Menu(head,menu)
+        ch=Get_Input(range(1,6))
         print
         if ch in "123":
             df[int(ch)]()
-    print '~'*lnth
+            Wait()
     return '6' if ch=='5' else '1'
 def Scale(l,x):
     if x>=len(l):
@@ -485,7 +487,7 @@ def Display(sz,hd,lt,la=[]):
         st+="{%d:^%s}|"%(x,sz[x])
     st=st[:-1]
     print 
-    print '='*lnth
+    print '='*wdt
     l=[]
     for x in range(len(hd)):
         l.append(wrap(hd[x],width=sz[x]))
@@ -493,7 +495,7 @@ def Display(sz,hd,lt,la=[]):
     for x in range(mxl):
         pt=tuple(map(Scale,l,[x]*len(sz)))
         print st.format(*pt)
-    print '='*lnth
+    print '='*wdt
     pos=0;n=1
     while n<st.count('^'):
         pos=st.index('^',pos+1)
@@ -508,8 +510,8 @@ def Display(sz,hd,lt,la=[]):
         for x in range(mxl):
             pt=tuple(map(Scale,l,[x]*len(sz)))
             print st.format(*pt)
-        print '.'*lnth
-    print '='*lnth
+        print '.'*wdt
+    print '='*wdt
 def Books_Display(bkl):
     sz=(6,20,15,10,9,7,5,16,6,6)
     hd=("Acc No","Title","Author","Publisher","Price(Rs)","Edition","Pages","Date of Purchase","Issued","Active")    
@@ -567,29 +569,22 @@ def Issues_Display(isul):
     Display(sz,hd,lt)
 def Issues_Report(): Issues_Display(lib.Get_Issues())
 def Search_Port():
-    print '~'*lnth
+    head="SEARCH PORTAL"
+    menu=("Search Book","Search Member","Search Issue","Go Back")
     df={1:Search_Book,2:Search_Member,3:Search_Issue}
     ch='1'
     while ch in "123":
-        print'''
-      ------------------------------
-      |_____::SEARCH PORTAL::______|
-      | Enter 1.Search Book        |
-      | Enter 2.Search Member      |
-      | Enter 3.Search Issue       |
-      | Enter 4.Go Back            |
-      | Enter 5.Exit               |
-      ------------------------------'''
-        ch=''
-        while ch not in "12345" or not ch:
-            ch=raw_input("Enter Choice: ")
+        Print_Head()
+        Print_Menu(head,menu)
+        ch=Get_Input(range(1,6))
         print
         if ch in "123":
             df[int(ch)]()
-    print '~'*lnth
+            Wait()
     return '6' if ch=='5' else '1'
 def Search_Book():
     bkl=lib.Get_Books()
+    print "Enter Details to Filter:"
     Acc='B'+raw_input("Enter Accession No: B")
     Ti=raw_input("Enter Title: ")
     Au=raw_input("Enter Author: ")
@@ -615,6 +610,7 @@ def Search_Book():
     Books_Display(fl)
 def Search_Member():
     meml=lib.Get_Members()
+    print "Enter Details to Filter:"
     MNo='M'+raw_input("Enter Member No: M")
     Nm=raw_input("Enter Name: ")
     Ad=raw_input("Enter Address: ")
@@ -633,12 +629,13 @@ def Search_Member():
     Members_Display(fl)
 def Search_Issue():
     isul=lib.Get_Issues()
+    print "Enter Details to Filter:"
     IN='I'+raw_input("Enter Issue No: I")
     Acc='B'+raw_input("Enter Accession No: B")
     MNo='M'+raw_input("Enter Member No: M")
     DI=raw_input("Enter Date of Issue: ")
     DR=raw_input("Enter Date of Return: ")
-    Fn=raw_input("Enter Minimum Fine Amount: Rs")
+    Fn=raw_input("Enter Minimum Fine Amount: Rs ")
     Fn=0 if not Fn else int(Fn)
     fl=[]
     for isu in isul:
@@ -653,6 +650,7 @@ def Search_Issue():
             fl.append(isu)
     Issues_Display(fl)
 #Main
-lib=Library()
 if __name__=='__main__':
+    plc=argv[0]
+    lib=Library(plc[:plc.rfind('\\')+1])
     LibMang()
